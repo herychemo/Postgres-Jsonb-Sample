@@ -1,0 +1,83 @@
+
+
+# App name
+spring:
+  application:
+    name: postgres-jsonb-sample
+
+
+  # Jackson configuration
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+
+  # Database global config
+  jpa:
+    database: default
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+
+  # Configure flyway schemas for auth-ms
+  flyway:
+    schemas: ${POSTGRES_DATABASE_SCHEMA:public}
+    locations: classpath:db/migration,classpath:db/data
+
+
+  # Configure Database DataSources
+  datasource:
+
+    # Postgres DataSource
+    postgres:
+      # Connection Properties
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://${POSTGRES_DATABASE_HOST:localhost}:${POSTGRES_DATABASE_PORT:5432}/${POSTGRES_DATABASE_DBNAME:test_db}?currentSchema=${POSTGRES_DATABASE_SCHEMA:public}
+      username: ${POSTGRES_DATABASE_USER:dbo_admin}
+      password: ${POSTGRES_DATABASE_PASS:rootroot}
+
+      # Pool Properties
+      initial-size: 1
+      max-active: 3
+      min-idle: 1
+      max-idle: 2
+
+      # Connection test properties
+      validation-query: SELECT 1
+      test-on-borrow: true
+      test-while-idle: true
+
+      #Connection test timing and intervals properties
+      time-between-eviction-runs-millis: 30000
+      min-evictable-idle-time-millis: 30000
+      validation-interval: 30000
+      max-wait: 10000
+
+      # Abandoned or dead connections handling properties
+      test-on-return: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 50
+      log-abandoned: true
+
+      # Interceptors
+      jdbc-interceptors: org.apache.tomcat.jdbc.pool.interceptor.SlowQueryReport(threshold=10000)
+
+
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+
