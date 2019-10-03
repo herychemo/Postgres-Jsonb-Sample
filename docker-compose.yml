@@ -2,10 +2,10 @@ version: "3.3"
 
 services:
 
-  PostgresDatabase:
+  PjsonbSample:
     image: postgres:11.2
-    container_name: PostgresDatabase
-    hostname: PostgresDatabase
+    container_name: PjsonbSample
+    hostname: PjsonbSample
     environment:
       - POSTGRES_PASSWORD=rootroot
       - POSTGRES_USER=dbo_admin

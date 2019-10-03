@@ -10,6 +10,7 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -47,5 +48,13 @@ public class SomeDocuments implements Serializable {
     @Type(type = "jsonb")
     @Column(name = "some_custom_json", columnDefinition = "jsonb")
     private Map<String, String> someCustomJson;
+
+    @Type(type = "jsonb")
+    @Column(name = "some_well_defined_json_array", columnDefinition = "jsonb")
+    private List<WellDefinedJson> someWellDefinedJsonArray;
+
+    @Type(type = "jsonb")
+    @Column(name = "some_custom_json_array", columnDefinition = "jsonb")
+    private List<Map<String, String>> someCustomJsonArray;
 
 }
